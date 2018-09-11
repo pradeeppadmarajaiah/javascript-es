@@ -1,0 +1,58 @@
+/**
+ * addCredit.
+ * @param {org.touchstone.basic.addCredit} tx The sample transaction instance.
+ * @transaction
+ */
+async function addCredit(tx) {  // eslint-disable-line no-unused-vars
+let assetRegistry = null;
+  if(tx.credit != null) {
+    if(tx.personalRecords.credit){
+     tx.personalRecords.credit.push(tx.credit);
+    }
+    else{
+      tx.personalRecords.credit = [tx.credit];
+    }
+  }
+  assetRegistry = await getAssetRegistry('org.touchstone.basic.PersonalRecords');
+  await assetRegistry.update(tx.personalRecords);
+ }
+
+
+/**
+ * updateCredit.
+ * @param {org.touchstone.basic.updateCredit} tx The sample transaction instance.
+ * @transaction
+ */
+async function updateCredit(tx) {  // eslint-disable-line no-unused-vars
+let assetRegistry = null;
+let personalRecords=tx.personalRecords;
+let credit=tx.Credit;
+ console.log("test");
+personalRecords.credit.forEach(value => {
+  if (value.creditId == credit.creditId) {
+    console.log("inside true");
+    value.dateOfReport= Credit.dateOfReport ;
+    value.documentReference=Credit.documentReference;
+  }
+});
+   console.log(personalRecords);
+  assetRegistry = await getAssetRegistry('org.touchstone.basic.PersonalRecords');
+  await assetRegistry.update(personalRecords);
+ }
+
+/**
+ * removeCredit.
+ * @param {org.touchstone.basic.removeCredit} tx The remove Credit transaction instance.
+ * @transaction
+ */
+async function removeCredit(tx) {  // eslint-disable-line no-unused-vars
+let assetRegistry = null;
+let personalRecords=tx.personalRecords;
+
+ var creditIndex = personalRecords.Credit.map((val)=> { return val.CreditId; }).indexOf(tx.CreditId);
+  if (creditIndex !== -1) {
+ personalRecords.Credit.splice(CreditIndex, 1);
+  }
+  assetRegistry = await getAssetRegistry('org.touchstone.basic.PersonalRecords');
+  await assetRegistry.update(tx.personalRecords);
+ }

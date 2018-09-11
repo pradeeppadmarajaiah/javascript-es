@@ -1,0 +1,59 @@
+/**
+ * addPoliceVerification.
+ * @param {org.touchstone.basic.addPoliceVerification} tx The sample transaction instance.
+ * @transaction
+ */
+async function addPoliceVerification(tx) {  // eslint-disable-line no-unused-vars
+let assetRegistry = null;
+  if(tx.policeVerification != null) {
+    if(tx.personalRecords.policeVerifications){
+     tx.personalRecords.policeVerifications.push(tx.policeVerification);
+    }
+    else{
+      tx.personalRecords.policeVerifications = [tx.policeVerification];
+    }
+  }
+  assetRegistry = await getAssetRegistry('org.touchstone.basic.PersonalRecords');
+  await assetRegistry.update(tx.personalRecords);
+ }
+
+
+/**
+ * updatePoliceVerification.
+ * @param {org.touchstone.basic.updatePoliceVerification} tx The sample transaction instance.
+ * @transaction
+ */
+async function updatePoliceVerification(tx) {  // eslint-disable-line no-unused-vars
+let assetRegistry = null;
+let personalRecords=tx.personalRecords;
+let PoliceVerification=tx.policeVerification;
+ console.log("test");
+personalRecords.policeVerifications.forEach(value => {
+  if (value.policeVerificationId == policeVerification.policeVerificationId) {
+    console.log("inside true");
+     value.recordNumber= policeVerification.recordNumber ;
+    value.dateOfReport= policeVerification.dateOfReport ;
+    value.documentReference=policeVerification.documentReference;
+  }
+});
+   console.log(personalRecords);
+  assetRegistry = await getAssetRegistry('org.touchstone.basic.PersonalRecords');
+  await assetRegistry.update(personalRecords);
+ }
+
+/**
+ * removePoliceVerification.
+ * @param {org.touchstone.basic.removePoliceVerification} tx The remove PoliceVerification transaction instance.
+ * @transaction
+ */
+async function removePoliceVerification(tx) {  // eslint-disable-line no-unused-vars
+let assetRegistry = null;
+let personalRecords=tx.personalRecords;
+
+ var policeVerificationIndex = personalRecords.policeVerifications.map((val)=> { return val.policeVerificationId; }).indexOf(tx.policeVerificationId);
+  if (policeVerificationIndex !== -1) {
+ personalRecords.PoliceVerification.splice(policeVerificationIndex, 1);
+  }
+  assetRegistry = await getAssetRegistry('org.touchstone.basic.PersonalRecords');
+  await assetRegistry.update(tx.personalRecords);
+ }

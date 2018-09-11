@@ -1,0 +1,42 @@
+concept Credit{
+      o String creditId
+      o String dateOfReport optional
+      o String documentReference optional
+   }
+
+  concept PoliceVerification {
+	  o String policeVerificationId
+ 	  o String recordNumber
+      o String 	dateOfReport
+	  o String documentReference optional
+}
+
+
+   asset PersonalRecords identified by personalId{
+  o String personalId
+  --> BaseParticipant user optional
+  o Documents[] documents optional
+  o TaxDetails[] taxDetails optional
+  o CreditReport[] creditReport optional
+  o BankDetails[] bankDetails optional
+  o PropertyDetails[] propertyDetails optional
+  o Ious[] ious optional
+  o AwardsRecognitions[] awardsRecognitions optional
+  o InsuranceDetails[] insuranceDetails optional
+  o MiscellaneousAssetDetails[] miscellaneousAssetDetails optional
+  o PoliceVerification[] policeVerifications optional
+}
+
+
+transaction addPoliceVerification{
+o PoliceVerification policeVerification
+  -->PersonalRecords personalRecords
+}
+  transaction updateCredit{
+o PoliceVerification policeVerification
+  -->PersonalRecords personalRecords
+}
+  transaction removeCredit{
+o String policeVerificationId
+  -->PersonalRecords personalRecords
+}

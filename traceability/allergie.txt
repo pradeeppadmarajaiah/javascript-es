@@ -1,0 +1,55 @@
+/**
+ * add addAllergie.
+ * @param {org.touchstone.basic.addAllergie} tx The sample transaction instance.
+ * @transaction
+ */
+async function addAllergie(tx) {  // eslint-disable-line no-unused-vars
+let assetRegistry = null;
+  if(tx.allergie != null) {
+    if(tx.health.allergie){
+     tx.health.allergie.push(tx.allergie);
+    }
+    else{
+      tx.health.healthCare = [tx.allergie];
+    }
+  }
+  assetRegistry = await getAssetRegistry('org.touchstone.basic.Health');
+  await assetRegistry.update(tx.health);
+ }
+
+/**
+ * update Allergie.
+ * @param {org.touchstone.basic.updateAllergie} tx The sample transaction instance.
+ * @transaction
+ */
+async function updateAllergie(tx) {  // eslint-disable-line no-unused-vars
+let assetRegistry = null;
+let health=tx.health;
+let allergie=tx.allergie;
+health.allergie.forEach(value => {
+  if (value.allergieId == healthCare.allergieId) {
+    value.allergieName=allergie.allergieName
+    value.documentReference=allergie.documentReference;
+  }
+});
+   console.log(health);
+  assetRegistry = await getAssetRegistry('org.touchstone.basic.Health');
+  await assetRegistry.update(health);
+ }
+
+/**
+ * remove Allergie.
+ * @param {org.touchstone.basic.removeAllergie} tx The remove Allergie transaction instance.
+ * @transaction
+ */
+async function removeHealthCare(tx) {  // eslint-disable-line no-unused-vars
+let assetRegistry = null;
+let health=tx.health;
+
+ var allergieIndex = health.allergie.map((val)=> { return val.allergieId; }).indexOf(tx.allergieId);
+  if (allergieIndex !== -1) {
+ health.allergie.splice(allergieIndex, 1);
+  }
+  assetRegistry = await getAssetRegistry('org.touchstone.basic.Health');
+  await assetRegistry.update(tx.health);
+ }
