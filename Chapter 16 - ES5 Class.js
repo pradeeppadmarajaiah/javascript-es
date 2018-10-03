@@ -22,17 +22,16 @@ console.log(`Type is : ${typeof name}`)
 name = new String("Pradeep")
 console.log(`Type is : ${typeof name}`),
 
-  sum = function(a, b) {
-    return a + b;
-  }
+sum = function(a, b) {
+  return a + b;
+}
 //or
-sum = new Function('a', 'b',
-  'return a+b');
+sum = new Function('a', 'b', 'return a+b');
+
 employee = {
   name: 'Pradeep'
 };
-employee = new Object({
-  name: "Pradeep"
-})
+
+employee = new Object({name: "Pradeep"})
 
 console.log(employee)
