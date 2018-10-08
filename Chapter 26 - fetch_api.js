@@ -27,8 +27,8 @@ function loadJson(e) {
 
   e.preventDefault();
 }
-document.getElementById('button3').addEventListener('click', loadAPI);
 
+document.getElementById('button3').addEventListener('click', loadAPI);
 function loadAPI(e) {
   fetch('http://api.icndb.com/jokes/random/5').then((res) => {
     return res.json();
